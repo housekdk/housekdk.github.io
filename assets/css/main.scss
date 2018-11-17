@@ -6,3 +6,13 @@
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+// Page의 padding을 0으로 바꿈
+.page {
+	padding-right: 0px !important;
+}
+
+// font-size change
+.page__content {
+	font-size: 18px;
+}
