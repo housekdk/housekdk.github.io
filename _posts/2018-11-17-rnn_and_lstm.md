@@ -4,13 +4,13 @@ date: 2018-11-17
 categories: Study
 tags: RNN LSTM
 ---
-팀 내부 study용으로 간략히 정리한 내용입니다. 
+팀 내부 study용으로 간략히 정리한 내용입니다.
 
 ## RNN의 직관적 이해
 
 - RNN의 은닉층은 DNN과 달리 이전 정보를 기억하는 역할
 - 은닉층은 $$h_t$$나 $$s_t$$로 표기 (s의 의미는 state)
-  - 네트워크의 "메모리" 부분으로서, 이전 시간 스텝의 hidden state 값과 $$t$$ 시점의 입력값에 의해 계산
+  - 네트워크의 메모리 부분으로서, 이전 시간 스텝의 hidden state 값과 $$t$$ 시점의 입력값에 의해 계산
 - 입력층, 은닉층간의 weight는 $$U$$나 $$W_{xh}$$로 표기
 - $$t-1$$시점 은닉층, $$t$$시점 은닉층 간의 weight는 $$W$$나 $$W_{hh}$$로 표기
 - 은닉층, 출력층간의 weight는 $$V$$나 $$W_{hy}$$로 표기
@@ -26,6 +26,10 @@ tags: RNN LSTM
 ![RNN2]({{ "/assets/imgs/2018-11-17-RNN-unrolled.png" | absolute_url }})
 
 ## RNN의 문제점
+- 예시
+  - **나는** 그제 철수, 영희와 함께 경방 타임스퀘어 버스 정류장 앞에서 뛰면서 즐겁게 **놀았다.**
+  - **나는 놀았다** 가 핵심
+  - RNN은 이런 문장에 취약, why?  
 - long-term dependency: $$x_1$$의 영향력이 점점 약해지면서 결국 소멸
 - $$V$$는 출력에만 영향을 주지만 $$W, U$$는 은닉층에 영향을 끼침
 - 타임스텝이 길수록 그레이던트 값이 기하급수적으로 작아져 0에 가까워짐. (gradient vanishing)
@@ -36,8 +40,6 @@ tags: RNN LSTM
 - 가장 널리 쓰이는 버전은 2000년 Gers가 제안한 망각(forget) 게이트 추가, peephole 추가 버전
 - 초기 버전 2개 게이트, 현 버전 3개 게이트 (입력 / 출력 / 망각)
 - 핵심 아이디어
-  - 나는 그제 가족과 함께 광화문 광장에서 즐겁게 놀았다
-  - 나는 놀았다가 핵심
   - RNN은 hidden state를 다음 타입 스텝으로 그대로 보냄
   - LSTM은 입력 게이트, 출력 게이트와 메모리 불록의 역할을 하는 cell state를 추가하여 초기 시점에서의 데이터가 잘 전달될 수 있도록 함
   - 현재 cell state = 이전 cell state + 입력 게이트에서 걸러진 일부 입력단(hidden state)
@@ -47,6 +49,9 @@ tags: RNN LSTM
 - 망각 게이트 추가 시에는 이전 cell state 내용을 일부 망각
   -  $$c_t = c_{t-1} \circ f + g \circ i $$
 - peephole 추가 시에는 cell state를 3개 게이트에 알려주는 역할을 함
+
+![LSTM]({{ "/assets/imgs/2018-11-17-LSTM.png" | absolute_url }})
+
 - [추천 사이트: colah의 블로그](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 
 $$
